@@ -24,7 +24,7 @@
     "url": "https://github.com/Sharlaan/material-ui-superselectfield.git"
   },
   "engines": {
-    "node": ">=8.9"
+    "node": ">=8.0"
   },
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -52,7 +52,7 @@
   "peerDependencies": {
     "react": "15.x || 16.x",
     "react-dom": "15.x || 16.x",
-    "material-ui": ">= 0.17 < 1"
+    "material-ui": ">= 1.0.0-beta.21"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.16",
@@ -62,7 +62,8 @@
     "enzyme-adapter-react-16": "^1.1.0",
     "eslint": "^4.11.0",
     "eslint-config-jonnybuchanan": "^5.0.1",
-    "material-ui": "^0.19.4",
+    "material-ui": "^1.0.0-beta.21",
+    "material-ui-icons": "^1.0.0-beta.17",
     "nwb": "^0.19.1",
     "prop-types": "^15.6.0",
     "react": "^16.1.1",
