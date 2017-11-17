@@ -1,5 +1,5 @@
 import React from 'react'
-import DropDownArrow from 'material-ui/svg-icons/navigation/arrow-drop-down'
+import DropDownArrow from 'material-ui-icons/KeyboardArrowDown'
 import FloatingLabel from './FloatingLabel'
 import { selectionsPresenterTypes } from './types'
 import { selectionsPresenterDefaultProps } from './defaultProps'
@@ -24,7 +24,7 @@ const SelectionsPresenter = ({
   isFocused, isOpen, disabled,
   errorText, errorStyle, underlineErrorStyle
 }) => {
-  const { textField: { floatingLabelColor, borderColor, focusColor } } = muiTheme
+  //const { textField: { floatingLabelColor, borderColor, focusColor } } = muiTheme
 
   const isValidObject = obj => Object.prototype.toString.call(obj) === '[object Object]' && Object.keys(obj).includes('value')
   // Condition for shrinking the floating Label
@@ -43,14 +43,14 @@ const SelectionsPresenter = ({
     borderLeft: 'none',
     borderRight: 'none',
     borderBottom: '1px solid',
-    borderColor,
+    borderColor: 'rgba(0, 0, 0, 0.54)',
     ...underlineStyle,
     ...(errorText ? { borderColor: 'red', ...underlineErrorStyle } : {})
   }
 
   const focusedHRstyle = disabled ? {} : (errorText ? underlineStyle : {
     borderBottom: '2px solid',
-    borderColor: (isFocused || isOpen) ? focusColor : borderColor,
+    borderColor: (isFocused || isOpen) ? '#bbdefb' : 'rgba(0, 0, 0, 0.54)',
     transition: '450ms cubic-bezier(0.23, 1, 0.32, 1)', // transitions.easeOut(),
     transform: `scaleX( ${(isFocused || isOpen) ? 1 : 0} )`,
     ...underlineFocusStyle
@@ -65,7 +65,7 @@ const SelectionsPresenter = ({
               shrink={isShrunk}
               isFocused={isFocused}
               disabled={disabled}
-              defaultColors={{ floatingLabelColor, focusColor }}
+              defaultColors={{ floatingLabelColor: 'rgba(0, 0, 0, 0.12)', focusColor: '#bbdefb' }}
               floatingLabelStyle={floatingLabelStyle}
               floatingLabelFocusStyle={floatingLabelFocusStyle}
             >
@@ -76,7 +76,7 @@ const SelectionsPresenter = ({
             selectionsRenderer(selectedValues, hintText)
           }
         </div>
-        <DropDownArrow style={{ fill: borderColor }} />
+        <DropDownArrow style={{ fill: 'rgba(0, 0, 0, 0.54)' }} />
       </div>
       <div style={styles.underline}>
         <hr style={baseHRstyle} />

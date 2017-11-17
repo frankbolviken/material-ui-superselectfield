@@ -1,6 +1,6 @@
 import React from 'react'
-import CheckedIcon from 'material-ui/svg-icons/navigation/check'
-import UnCheckedIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank'
+import CheckedIcon from 'material-ui-icons/CheckBox'
+import UnCheckedIcon from 'material-ui-icons/CheckBoxOutlineBlank'
 
 export const floatingLabelDefaultProps = {
   shrink: false

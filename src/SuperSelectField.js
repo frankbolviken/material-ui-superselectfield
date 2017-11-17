@@ -4,7 +4,8 @@
  */
 import React, { Component } from 'react'
 import InfiniteScroller from 'react-infinite'
-import ListItem from 'material-ui/List/ListItem'
+import { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
+import Checkbox from 'material-ui/Checkbox'
 import Popover from 'material-ui/Popover/Popover'
 import TextField from 'material-ui/TextField/TextField'
 import SelectionsPresenter from './SelectionsPresenter'
@@ -12,6 +13,7 @@ import { getChildrenLength, areEqual } from './utils'
 import PropTypes from 'prop-types'
 import { selectFieldTypes } from './types'
 import { selectFieldDefaultProps } from './defaultProps'
+import { withTheme } from 'material-ui/styles'
 
 class SelectField extends Component {
   constructor(props, context) {
@@ -71,7 +73,7 @@ class SelectField extends Component {
     const targetMenuItem = this.menuItems.find(item => {
       return !!item && (index ? item.props.tabIndex === index : true)
     })
-    if (targetMenuItem) targetMenuItem.applyFocusState('keyboard-focused')
+    //if (targetMenuItem) targetMenuItem.applyFocusState('keyboard-focused')
   }
 
   focusTextField() {
@@ -201,16 +203,16 @@ class SelectField extends Component {
       autocompleteUnderlineStyle, autocompleteUnderlineFocusStyle, noMatchFound, noMatchFoundStyle,
       checkedIcon, unCheckedIcon, hoverColor, checkPosition, errorText, errorStyle, underlineErrorStyle
     } = this.props
-
     // Default style depending on Material-UI context (muiTheme)
-    const { baseTheme: { palette }, menuItem } = this.context.muiTheme
+    //const { baseTheme: { palette }, menuItem } = this.context.theme
+    const { palette } = this.props.theme
 
-    const mergedSelectedMenuItemStyle = {
+    /*const mergedSelectedMenuItemStyle = {
       color: menuItem.selectedTextColor, ...selectedMenuItemStyle
-    }
-    if (checkedIcon) checkedIcon.props.style.fill = mergedSelectedMenuItemStyle.color
-    const mergedHoverColor = hoverColor || menuItem.hoverColor
-
+    }*/
+    /*if (checkedIcon) checkedIcon.props.style.fill = mergedSelectedMenuItemStyle.color
+      const mergedHoverColor = hoverColor || menuItem.hoverColor
+*/
     /**
      * MenuItems building, based on user's children
      * 1st function is the base process for producing a MenuItem,
@@ -225,7 +227,7 @@ class SelectField extends Component {
       const isSelected = Array.isArray(selectedItems)
         ? selectedItems.some(obj => areEqual(obj.value, childValue))
         : selectedItems ? selectedItems.value === childValue : false
-      const leftCheckbox = (multiple && checkPosition === 'left' && (isSelected ? checkedIcon : unCheckedIcon)) || null
+      //const leftCheckbox = (multiple && checkPosition === 'left' && (isSelected ? checkedIcon : unCheckedIcon)) || null
       const rightCheckbox = (multiple && checkPosition === 'right' && (isSelected ? checkedIcon : unCheckedIcon)) || null
       if (multiple && checkPosition !== '') {
         if (checkedIcon) checkedIcon.props.style.marginTop = 0
@@ -234,14 +236,9 @@ class SelectField extends Component {
       return [...nodes, (
         <ListItem
           key={++index}
-          tabIndex={index}
           ref={ref => (this.menuItems[++index] = ref)}
           onClick={this.handleMenuSelection({ value: childValue, label })}
           disableFocusRipple
-          leftIcon={leftCheckbox}
-          rightIcon={rightCheckbox}
-          primaryText={child}
-          hoverColor={mergedHoverColor}
           innerDivStyle={{
             paddingTop: 10,
             paddingBottom: 10,
@@ -249,8 +246,17 @@ class SelectField extends Component {
             paddingRight: (multiple && checkPosition === 'right') ? 56 : 16,
             ...innerDivStyle
           }}
-          style={isSelected ? mergedSelectedMenuItemStyle : {}}
-        />)]
+        >
+          <Checkbox
+            checked={isSelected}
+            tabIndex={-1}
+            disableRipple
+          />
+          <ListItemText primary={child} />
+          <ListItemSecondaryAction>
+            {rightCheckbox}
+          </ListItemSecondaryAction>
+        </ListItem>)]
     }
 
     const fixedChildren = Array.isArray(children) ? children : [children]
@@ -320,7 +326,7 @@ class SelectField extends Component {
           errorText={errorText}
           errorStyle={errorStyle}
           underlineErrorStyle={underlineErrorStyle}
-          muiTheme={this.context.muiTheme}
+          muiTheme={this.props.theme}
           selectedValues={this.state.selectedItems}
           selectionsRenderer={selectionsRenderer}
           floatingLabel={floatingLabel}
@@ -383,9 +389,9 @@ class SelectField extends Component {
 }
 
 SelectField.contextTypes = {
-  muiTheme: PropTypes.object.isRequired
+  theme: PropTypes.object.isRequired
 }
 SelectField.propTypes = selectFieldTypes
 SelectField.defaultProps = selectFieldDefaultProps
 
-export default SelectField
+export default withTheme()(SelectField)
